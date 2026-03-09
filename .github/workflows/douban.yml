@@ -1,8 +1,8 @@
 name: douban
 on:
   schedule:
-    # 每小时的第30分钟自动运行一次
-    - cron: "30 * * * *"
+    # 每月1号零点自动运行一次
+    - cron: "0 0 1 * *"
   # 也支持手动触发（方便测试）
   workflow_dispatch:
 
@@ -60,4 +60,3 @@ jobs:
         with:
           message: 'chore: update douban data'
           add: './data/douban'
-```
