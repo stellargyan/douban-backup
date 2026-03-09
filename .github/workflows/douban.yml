@@ -1,0 +1,63 @@
+name: douban
+on:
+  schedule:
+    # 每小时的第30分钟自动运行一次
+    - cron: "30 * * * *"
+  # 也支持手动触发（方便测试）
+  workflow_dispatch:
+
+jobs:
+  douban:
+    name: Douban mark data sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 同步"看过"的电影
+      - name: movie done
+        uses: lizheming/doumark-action@master
+        with:
+          id: '160664698'
+          type: movie
+          status: done
+          format: csv
+          dir: ./data/douban
+
+      # 同步"读过"的书
+      - name: book done
+        uses: lizheming/doumark-action@master
+        with:
+          id: '160664698'
+          type: book
+          status: done
+          format: csv
+          dir: ./data/douban
+
+      # 同步"听过"的音乐
+      - name: music done
+        uses: lizheming/doumark-action@master
+        with:
+          id: '160664698'
+          type: music
+          status: done
+          format: csv
+          dir: ./data/douban
+
+      # 同步"玩过"的游戏
+      - name: game done
+        uses: lizheming/doumark-action@master
+        with:
+          id: '160664698'
+          type: game
+          status: done
+          format: csv
+          dir: ./data/douban
+
+      # 自动提交到仓库
+      - name: Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'chore: update douban data'
+          add: './data/douban'
+```
